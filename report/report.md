@@ -22,26 +22,38 @@ Rachit Kumar & 2310110234 \\
 
 # Introduction
 
-The International Monetary Fund (IMF) asked us to find out how countries can be grouped by the issues that their information and communications technology (ICT) workers face, and to show that the grouping makes sense from a macroeconomic point of view. The data covers 37 countries and nine issues: dependence on friendship circles (FC), job insecurity (JI), self-efficacy (SE), work satisfaction (WS), work overload (WO), work-home conflict (WH), work exhaustion (WE), turnover intention (TI, leaving the employer) and turnaway intention (TA, leaving the ICT profession altogether). Each issue comes with two scores, a factor score and a sum score, and the IMF asked that the grouping be done with both and the results compared.
+The International Monetary Fund (IMF) has asked us to find out how countries can be grouped by the issues that their information and communications technology (ICT) workers face, and to show that the grouping makes sense from a macroeconomic point of view. The data we are given covers 37 countries and 9 issues.
 
-We set out to answer three questions. How many natural groups of countries are there, and which countries belong to each? Do the factor scores and the sum scores lead to the same groups? And what do the groups have in common economically, so that the IMF can use them in its policy work?
+- dependence on friendship circles (FC)
+- job insecurity (JI)
+- self-efficacy (SE)
+- work satisfaction (WS)
+- work overload (WO)
+- work-home conflict (WH)
+- work exhaustion (WE)
+- turnover intention (TI, employer attrition)
+- turnaway intention (TA, attrition from the ICT profession altogether). 
 
-The data is a set of country averages, built from 93 to 634 ICT workers per country. Our groups therefore describe countries, not individual workers, and the interpretation rests on economic reasoning rather than on additional country data.
+Each of the issues mentioned above comes with two scores: a factor score, and a sum score. The IMF has asked that the grouping be done with both and the results compared.
 
-**Our recommendations in brief:**
+Thus, we set out to answer three questions. How many natural groups of countries can be formed, and which countries belong to each of said groups? Do the factor scores and the sum scores lead to the same groups, and what do the groups have in common economically, so that the IMF can use them in its policy work?
 
-1. Use a two-group classification of countries for ICT labour policy, not the usual split between advanced and emerging economies, which these groups cut across.
-2. In the "strained but mobile" group (mostly Europe and the Americas), treat exhaustion and exit from the ICT profession as the main risk, and focus on workload and working-time policy.
-3. In the "insecure but committed" group (mostly Asia, the Middle East and Africa), treat job insecurity as the main risk, and focus on safety nets, reskilling and deeper tech job markets.
-4. Keep two small watch lists, Iran, Japan and South Korea, and Bangladesh, Malaysia, Nigeria and Pakistan, whose position depends on which score is used.
+The data is a set of national averages built from 93 to 634 ICT workers per country. Our groups therefore describe countries rather than individual workers, and the interpretation works off economic reasoning rather than on any additional country data.
+
+**Our recommendations, briefly:**
+
+1. Use a two-group classification of countries for ICT labour policy, and not the usual split between advanced and emerging economies which these groups cut across.
+2. In the "strained but mobile" group (that includes mostly Europe and the Americas), treat exhaustion and exit from the ICT profession as the main risk, focusing on workload and working-time related policy.
+3. In the "insecure but committed" group (that includes mostly Asia, the Middle East and Africa), treat job insecurity as the chief risk, focusing on safety nets, reskilling and deeper tech job markets.
+4. Keep two small watchlists: one being Iran, Japan and South Korea, and the other being Bangladesh, Malaysia, Nigeria and Pakistan, whose position depends on which score is used.
 
 # Data preprocessing
 
-The file has one sheet with 37 rows and 21 columns: the country, a country code, the number of respondents and the two scores for each of the nine issues. We checked it in Python with pandas [7]. There are no missing values, no text in numeric columns and no duplicated countries or codes. The codes run from 1 to 46 with nine gaps, so the IMF has evidently kept 37 of the 46 countries in the original study. Nothing needed correcting.
+The file has one sheet with 37 rows and 21 columns: the country, a country code, the number of respondents and the two scores for each of the nine issues. We checked it in Python with pandas [7]: there are no missing values, no text in numeric columns and no duplicated countries or codes; the codes run from 1 to 46 with nine gaps, so the IMF has kept 37 of the 46 countries in the original study.
 
-**Two kinds of score.** The factor scores (FS) are already standardised, with a mean close to zero for every issue. The sum scores (S) are on a different scale for each issue, because each issue is measured with a different number of questionnaire items: friendship circles average 5.8 and work satisfaction 13.4. Distance-based clustering would let the issues with the largest scales dominate, so we standardised every sum score to a mean of 0 and a standard deviation of 1 before clustering. The two scores agree closely for each issue, with correlations between 0.93 (work satisfaction) and 0.998 (friendship circles), so any difference in the groups will come from the details, not from a different picture of the countries.
+The factor scores (FS) are already standardised, with a mean close to zero for every issue. The sum scores (S) are on a different scale for each issue, because each issue is measured with a different number of questionnaire items (friendship circles average 5.8 and work satisfaction 13.4). Any distance-based clustering would let the issues with relatively larger scales dominate, so we standardised every sum score to a mean of 0 and a standard deviation of 1 before clustering them. The two scores agree closely for each issue, with correlations between 0.93 (work satisfaction) and 0.998 (friendship circles) so any difference in the groups will come from the details and not from a different perspective of the countries.
 
-**Extreme values.** Ten values lie more than 2.5 standard deviations from the mean (Table 1). Iran scores very high on job insecurity and self-efficacy in both scores, and Nigeria very low on work overload, work-home conflict and exhaustion, but only in the sum scores. These are real country averages, not data-entry errors, so we kept them. Because a few extreme countries can pull cluster centres, we re-ran the clustering without Iran and Nigeria as a check (Section 5).
+Ten values lie more than 2.5 SDs from the mean, where Iran scores very high on job insecurity as well as self-efficacy in both scores, and Nigeria very low on work overload, work-home conflict and exhaustion, but only in the sum scores. These are not data-entry errors, so we kept them. Because a few extreme countries can pull cluster centres around we re-ran the clustering without Iran and Nigeria as a check.
 
 | Country | Issue | Score | z |
 |:-----------|:----------------------|:------------------|------:|
@@ -52,15 +64,15 @@ The file has one sheet with 37 rows and 21 columns: the country, a country code,
 | Nigeria | Work overload, work-home conflict, exhaustion | Sum score | $-2.75$ to $-3.13$ |
 | Pakistan | Work-home conflict | Factor score | $-2.61$ |
 
-Table: Values more than 2.5 standard deviations from the mean (kept in the data)
+Table: Values more than 2.5 standard deviations from the mean (these are still kept in the data)
 
-The number of respondents varies from 93 (Nigeria) to 634 (Thailand). We did not weight countries by it, since the IMF's question is about countries, but averages from small samples are less precise, which matters for Nigeria in particular.
+The number of respondents varies from 93 in Nigeria to 634 in Thailand. We did not weight countries by it since the IMF's question is about countries, but averages from small samples aren't as precise, which particularly matters for Nigeria.
 
 # Data visualization
 
-**The issues form two blocks.** Work overload, work-home conflict, exhaustion, satisfaction, turnover and turnaway all rise together across countries, and work-home conflict and exhaustion are the most closely linked (correlation 0.84, Figure 1a). Job insecurity and self-efficacy form a second block that moves the other way: countries where ICT workers feel insecure also report high self-efficacy (0.73) and much lower intention to leave the profession ($-0.72$). Friendship circles sit largely on their own. A single principal component captures 54% of the variation in the nine factor scores, a strong hint that countries split along one main dimension.
+The issues form two blocks: one constituted by work overload, work-home conflict, exhaustion, satisfaction, turnover and turnaway, that all rise together across countries, with work-home conflict and exhaustion being the most closely linked (correlation 0.84, as seen in Figure 1a). Job insecurity and self-efficacy are the constituents of the second block; that is countries where ICT workers feel insecure but also report high self-efficacy (0.73) with a much lower intention to leave the profession altogether ($-0.72$). Friendship circles sit largely on their own. A single principal component captures 54% of the variation in the nine factor scores, an implication that countries split along one main dimension.
 
-**Countries line up along that dimension.** When the countries are ordered by this first component (Figure 1b), the top of the heatmap is dominated by East and South Asian, Middle Eastern and African countries with high insecurity and self-efficacy, and the bottom by European and American countries with high strain and exit intentions. The change is gradual for most issues, so the clustering has to decide where the boundary lies.
+**Countries line up along that dimension.** When the countries are ordered by this first component (Figure 1b), the top of the heatmap is dominated by East and South Asian, Middle Eastern and African countries with high insecurity and self-efficacy, the bottom by European and American countries with high strain and exit intentions. The change is gradual for most issues, which means the clustering has to decide the boundary.
 
 ```{=latex}
 \begin{figure}[htbp]
@@ -79,12 +91,12 @@ The number of respondents varies from 93 (Nigeria) to 634 (Thailand). We did not
 
 # Hypotheses and theory building
 
-We frame the issues with the job demands-resources model [1]. Demands such as work overload, work-home conflict and job insecurity wear workers down and lead to exhaustion, and exhaustion leads to withdrawal, first from the employer (turnover) and then from the profession (turnaway). Resources such as friendship circles, self-efficacy and satisfaction buffer this process. At the level of countries, demands, resources and the realistic options for leaving all depend on the economy and the labour market. That gives four macroeconomic hypotheses, stated before any clustering was done:
+We frame the issues with the job demands-resources model [1]. Demands such as work overload, work-home conflict and job insecurity wear workers down and lead to exhaustion, and exhaustion leads to withdrawal, first from the employer (turnover) and then from the profession (turnaway). Resources such as friendship circles, self-efficacy and satisfaction help buffer this process. At the level of countries, demands, resources and the realistic options for leaving all depend on the economy and the labour market leaving four hypotheses:
 
 | | Hypothesis |
 |:-----|:---------------------------------------------------------------------------------|
 | H1 | The groups follow the IMF's split between advanced and emerging or developing economies |
-| H2 | The groups follow culture and region, separating more collectivist from more individualist societies [2] |
+| H2 | The groups follow culture and region, separating more collectivist from more individualist societies |
 | H3 | Where ICT labour markets are deep and skills are portable, workers feel less insecure but are more willing to leave their employer and the profession |
 | H4 | Demands, strain and withdrawal move together, as the job demands-resources model predicts |
 
@@ -92,9 +104,9 @@ Table: Hypotheses
 
 # Analysis
 
-**Method.** We grouped the countries with the two standard methods for this kind of data, using Euclidean distance on the nine standardised issues. Ward's hierarchical clustering [3] starts with each country on its own and merges at each step the two groups whose merger adds least to the spread within groups. k-means [4] places $k$ cluster centres and moves them until each country sits with its nearest centre; we used 200 random starts and a fixed seed, so the result can be reproduced. Both methods were run on the factor scores and on the standardised sum scores, with scikit-learn [6].
+**Method.** We grouped the countries with the two standard methods for this kind of data, using Euclidean distance on the 9 standardised issues. Ward's hierarchical clustering [3] starts with each country on its own and merges at each step the two groups whose merger adds least to the spread within groups. k-means [4] places $k$ cluster centres and moves them until each country sits with its nearest centre. We use 200 random starts and a fixed seed. Both methods were run on the factor scores and on the standardised sum scores, using scikit-learn [6].
 
-**Choosing the number of clusters.** We used the elbow method and the average silhouette [5]. The elbow method plots the within-cluster sum of squares against $k$ and looks for the point where adding a cluster stops paying off. The silhouette measures, for each country, how much closer it is to its own cluster than to the next one, from $-1$ to $1$. Both point the same way for both scores (Table 3, Figure 2). Going from one to two clusters removes 42% of the within-cluster variation for the factor scores and 38% for the sum scores; every later step removes less than 20%. The average silhouette is highest at $k = 2$ (0.35 and 0.32), only slightly lower at $k = 3$, and falls sharply at $k = 4$. The Calinski–Harabasz index also peaks at $k = 2$. We therefore take two clusters as the main solution and examine three as a refinement.
+**Choosing the number of clusters.** We used the elbow method and the average silhouette [5]. The elbow method plots the within-cluster sum of squares against $k$ and looks for the point where adding a cluster stops adding value. The silhouette measures, for each country, how much closer it is to its own cluster than to the next one, from $-1$ to $1$. Both point the same way for both scores (Table 3, Figure 2). Going from one to two clusters removes 42% of the within-cluster variation for the factor scores and 38% for the sum scores; every later step removes less than 20%. The average silhouette is highest at $k = 2$ (0.35 and 0.32), only slightly lower at $k = 3$, and falls sharply at $k = 4$. The Calinski-Harabasz index also peaks at $k = 2$. We therefore take two clusters as the main solution and examine three as a refinement.
 
 | | Factor scores | | | | Sum scores | | | |
 |:--|------:|------:|------:|------:|------:|------:|------:|------:|
@@ -104,15 +116,15 @@ Table: Hypotheses
 | 4 | 13.73 | 12.5% | 0.195 | 14.9 | 139.92 | 13.5% | 0.197 | 14.5 |
 | 5 | 12.17 | 11.3% | 0.171 | 13.3 | 118.51 | 15.3% | 0.223 | 13.9 |
 
-Table: Choosing the number of clusters (WSS: within-cluster sum of squares; Drop: reduction from $k-1$; CH: Calinski–Harabasz index)
+Table: Choosing the number of clusters (WSS: within-cluster sum of squares; Drop: reduction from $k-1$; CH: Calinski-Harabasz index)
 
 ![Elbow plot (within-cluster sum of squares, solid) and average silhouette (dashed) for k-means on both scores.](output/figures/fig4_elbow_silhouette.png){width=88%}
 
-**Ward and k-means agree.** The Ward dendrogram (Figure 3) has one dominant merge: two groups that join only at the very top, far above every other merge. Cutting it into two or three groups gives exactly the same memberships as k-means with both scores (adjusted Rand index 1.00, Table 4). The adjusted Rand index [8] compares two groupings, from about 0 for agreement no better than chance to 1 for identical groups. The two methods only part ways at $k = 4$ (0.65 and 0.55), another sign that four clusters force splits the data does not support.
+**Ward and k-means agree.** The Ward dendrogram (Figure 3) has one dominant merge: two groups that join only at the very top, far above every other merge. Cutting it into two or three groups gives exactly the same memberships as k-means with both scores (adjusted Rand index 1.00, Table 4). The adjusted Rand index [8] compares two groupings, from ~0 for agreement no better than chance to 1 for identical groups. The two methods only part ways at $k = 4$ (0.65 and 0.55), another sign that four clusters forces splits that the data doesn't support.
 
 ![Ward hierarchical clustering of the factor scores. The dashed line cuts the tree into three groups.](output/figures/fig5_dendrogram.png){width=95%}
 
-**Factor scores and sum scores give the same two groups, but not the same three.** With two clusters, the factor scores and the sum scores put every one of the 37 countries in the same group (adjusted Rand index 1.00). With three clusters they agree only partly (0.78), and seven countries move (Table 5). The large European and American group of 20 is identical either way. The difference lies in which small group breaks away from the other 17 countries. With the factor scores it is Iran, Japan and South Korea, which stand out on friendship circles, self-efficacy and job insecurity. With the sum scores it is Bangladesh, Malaysia, Nigeria and Pakistan, which stand out on very low overload, work-home conflict and exhaustion. Section 6 explains why the scores behave differently.
+**Factor scores and sum scores give the same two groups, but not the same three.** With two clusters, the factor scores and the sum scores put every one of the 37 countries in the same group (adjusted Rand index 1.00). With three clusters they agree only partly (0.78), and seven countries move (Table 5). The large European and American group of 20 are identical either way. The difference is in which small group breaks away from the other countries. With the factor scores it is Iran, Japan and South Korea, which stand out on friendship circles, self-efficacy and job insecurity. With the sum scores it is Bangladesh, Malaysia, Nigeria and Pakistan, which stand out on very low overload, work-home conflict and exhaustion. Section 6 explains why the scores behave differently.
 
 | k | FS vs S (k-means) | FS vs S (Ward) | k-means vs Ward (FS) | k-means vs Ward (S) |
 |:--|------:|------:|------:|------:|
@@ -130,19 +142,29 @@ Table: Agreement between scores and methods (adjusted Rand index)
 
 Table: Three-cluster memberships with factor scores (rows) and sum scores (columns)
 
-**The two-cluster solution is stable.** Without Iran and Nigeria, the two-cluster memberships of the remaining 35 countries are unchanged with both scores (adjusted Rand index 1.00). The three-cluster solution is less stable (0.72 for factor scores and 0.52 for sum scores), because its small groups are built around exactly these extreme countries. The per-country silhouettes show where the boundary is soft. Russia sits on the border between the two clusters (silhouette $-0.01$), with Poland (0.15) and Canada (0.18) close to it, and every other country fits its cluster better than the alternative.
+**The two-cluster solution is stable.** The results remain the same even after removing Iran and Nigeria. The remaining 35 countries are assigned to exactly the same two clusters using both factor scores and sum scores, with an adjusted Rand index of 1.00. The three-cluster solution is less consistent, with values of 0.72 for factor scores and 0.52 for sum scores. This difference seems to be mainly due to the smaller groups being influenced by countries with particularly extreme scores.
 
-**Do the clusters differ, and on which issues?** We compared the clusters on each issue with a one-way ANOVA (Table 9), and checked its two assumptions. The Shapiro–Wilk test checks that scores are roughly normal within each cluster, and Levene's test checks that the spread is similar across clusters. With two clusters on the factor scores, only one Shapiro–Wilk test (job insecurity) and one Levene test (work overload) reject at 5%; on the sum scores, two Shapiro–Wilk tests and no Levene test reject. Because the clusters are small, we repeated every comparison with the Kruskal–Wallis test, which assumes neither. It gives the same verdict as ANOVA on every issue, for both scores and both numbers of clusters. One caution: the clusters were formed from these same scores, so significant differences are expected and the p-values overstate the evidence. What the ANOVA adds is the size of each difference (eta squared, the share of variation explained by the clusters), which shows which issues drive the split. For the three-cluster solutions, Tukey's test identifies which pairs of clusters differ (Table 6).
+The silhouette scores also give an idea of how well each country fits into its assigned cluster. Russia is almost equally positioned between the two groups, with a silhouette score of -0.01. Poland (0.15) and Canada (0.18) are also relatively close to the boundary. Most of the remaining countries have higher silhouette scores, suggesting that they fit their assigned clusters more clearly.
+
+**Do the clusters differ, and on which issues?** To examine the differences between the clusters, we used a one-way ANOVA for each of the nine issues (Table 9). We also checked the assumptions required for this test. The Shapiro-Wilk test was used to examine whether the scores were approximately normally distributed within each cluster, while Levene's test checked whether the variation in scores was similar across the groups.
+
+For the two-cluster solution using factor scores, only job insecurity failed the Shapiro-Wilk test, while work overload failed Levene's test at the 5% significance level. With sum scores, two Shapiro-Wilk tests were significant, while none of the Levene tests showed a significant result. Since the number of countries in each cluster is relatively small, we also repeated the comparisons using the Kruskal-Wallis test, which does not require the same assumptions as ANOVA. The results were consistent across both tests for every issue, using both scoring methods and both cluster solutions.
+
+One point worth considering is that the clusters were created using the same scores that were later compared. Therefore, some differences between the groups are expected, and the p-values may overstate the strength of the evidence. We also considered eta squared, which measures how much of the variation in each issue can be explained by cluster membership. This helps identify which issues contribute most to the differences between the groups. For the three-cluster solutions, Tukey's test was used to identify the specific pairs of clusters that differ (Table 6).
 
 {{float:tukey_k3_wide|Tukey HSD p-values for each pair of clusters in the three-cluster solutions (* p < 0.10, ** p < 0.05, *** p < 0.01)}}
 
 # Results
 
-**Descriptive statistics.** Table 7 summarises both scores for every issue. The factor scores are centred near zero by construction; the sum scores show the different scales that made standardisation necessary. Self-efficacy is the most skewed issue (skewness 1.1 for both scores), because of Iran.
+**Descriptive statistics.** Table 7 presents the descriptive statistics for both factor scores and sum scores across all nine issues. The factor scores are centred around zero, which is expected given how they are calculated. The sum scores have different scales across the issues, making standardisation necessary before comparing them. Self-efficacy has the highest skewness, at 1.1 for both scoring methods. This is largely influenced by Iran, which has an unusually high score on this issue.
 
 {{float:descriptives|Descriptive statistics of the 37 country averages (S on its original scale; kurtosis is excess kurtosis)}}
 
-**Two groups of countries.** The robust solution divides the countries into two clusters of 17 and 20 (Table 8). Their profiles are close to mirror images (Figure 4). Eight of the nine issues differ significantly between them with both scores (Table 9); only friendship circles do not. The largest differences are in work satisfaction, turnaway intention and job insecurity, each of which the clusters explain more than half the variation in. Figure 5 places the two clusters on the first two principal components, where they fall on either side of the vertical axis.
+**Two groups of countries.** The two-cluster solution divides the 37 countries into two groups of 17 and 20 countries respectively (Table 8). The same grouping is obtained using factor scores and sum scores, as well as with Ward's method and k-means clustering. This consistency makes the two-cluster solution a useful basis for interpreting the results.
+
+The profiles of the two groups are quite different, as shown in Figure 4. Eight of the nine issues show statistically significant differences between the clusters using both scoring methods. Friendship circles are the only issue where the difference is not significant. The largest differences appear in work satisfaction, turnaway intention and job insecurity. For each of these issues, cluster membership explains more than half of the variation in scores.
+
+Figure 5 shows the two groups using the first two principal components. Most countries appear on opposite sides of the vertical axis, although a few are positioned closer to the boundary between the clusters.
 
 | Cluster | n | Countries |
 |:--------------------------------|---:|:------------------------------------------------------------|
@@ -166,19 +188,45 @@ Table: The two clusters (identical with factor scores and sum scores, and with W
 | Turnover intention | $-0.13$ | 0.13 | 10.8\*\*\* | 0.24 | 0.005 | $-0.54$ | 0.46 | 0.25\*\*\* |
 | Turnaway intention | $-0.31$ | 0.31 | 48.3\*\*\* | 0.58 | <0.001 | $-0.88$ | 0.75 | 0.68\*\*\* |
 
-Table: Cluster means and one-way ANOVA for the two-cluster solution (KW: Kruskal–Wallis; *** p < 0.01)
+Table: Cluster means and one-way ANOVA for the two-cluster solution (KW: Kruskal-Wallis; *** p < 0.01)
 
 ![The two clusters on the first two principal components, with the countries that split off at k = 3 marked.](output/figures/fig7_cluster_map.png){width=80%}
 
-**Cluster 1: insecure but committed.** ICT workers in these 17 countries feel less secure in their jobs and less satisfied, but they are confident in their own abilities, report less overload, work-home conflict and exhaustion, and are much less inclined to leave their employer or the profession. Fifteen of the 17 lie in East, Southeast and South Asia, the Middle East, Africa or Russia. Three economic features help explain the pattern. First, in most of these economies ICT jobs pay far above the national median wage and carry high social status, so leaving the profession would mean a large loss; the low turnaway intention reflects that cost. Second, tech job markets are thinner, with fewer employers and less mobility between them, so a lost job is harder to replace. That explains why insecurity is higher and why workers stay put instead of searching: insecurity and commitment are two sides of the same limited outside options. Third, most of these societies are more collectivist [2], with stronger norms of loyalty to the employer and long careers inside one firm, especially in Japan, South Korea and Taiwan, and with family networks that absorb home demands and lower work-home conflict. High self-efficacy fits a profession that is selective and prestigious in these economies.
+**Cluster 1: Insecure but committed.** This cluster contains 17 countries. On average, ICT workers in these countries report greater job insecurity and lower work satisfaction. At the same time, they tend to have higher confidence in their own abilities and report less work overload, less conflict between work and home, and lower exhaustion. They are also less likely to consider leaving their current employer or moving out of the ICT profession.
 
-**Cluster 2: strained but mobile.** In these 20 countries ICT workers feel more secure and more satisfied, but they also report more overload, work-home conflict and exhaustion, and they are much more willing to leave both their employer and the profession. Sixteen of the 20 are in Europe or the Americas. These are mostly deep, open ICT labour markets in which skills are portable. A lost job is easy to replace, so insecurity is low, and the same ease of movement makes turnover and turnaway realistic choices rather than risky ones. The Central and Eastern European members, Hungary, Lithuania, Macedonia, Poland and Romania, are nearshoring hubs inside or next to the European labour market, where moving abroad is also an option; Mexico, Peru, Brazil and Argentina play a similar role for North America. India belongs here for a related reason: its large outsourcing industry is known for some of the highest attrition rates among IT workers anywhere, which matches the cluster's high turnaway and very low insecurity. In more individualist cultures [2], conflicts between work and home are also felt and reported more strongly.
+Fifteen of the 17 countries are located in East, Southeast or South Asia, the Middle East, Africa or Russia. A few economic and social factors could help explain this pattern.
 
-**Countries at the edges.** Two members of Cluster 1, Canada and France, are advanced Western economies. France's strong employment protection and short legal working week fit the low overload and turnover of Cluster 1, and Canada sits close to the boundary (silhouette 0.18). Russia lies exactly on the boundary between the two clusters and should be treated as belonging to neither.
+First, ICT jobs in many of these economies offer relatively high salaries and social status compared with other professions. Leaving the sector could therefore involve a considerable financial or professional loss. This may help explain why workers are less likely to consider leaving, even when they feel uncertain about their job security.
 
-**The three-cluster refinements depend on the score.** With the factor scores, Iran, Japan and South Korea form their own group, with very high self-efficacy, friendship circles and job insecurity (Figure 4, right). Japan and South Korea combine company-centred social lives with intense workplace pressure, and Iran's sanctions-affected economy adds insecurity to a highly educated, tightly networked tech workforce. With the sum scores, Bangladesh, Malaysia, Nigeria and Pakistan form a group instead, defined by extremely low overload, work-home conflict and exhaustion, at about 1.7 standard deviations below the mean. The difference comes from how the scores are built. A sum score adds up the raw answers to every item, so a country that answers some items at the extreme of the scale moves a long way. A factor score weights the items by how well they measure the issue and filters out item-specific noise, which damps these extremes. Nigeria's very low strain appears only in the sum scores, and Nigeria has the smallest sample (93 workers). The factor scores are therefore the more reliable basis for the refinement. Neither refinement survives the removal of the extreme countries well, so we treat them as watch lists rather than as separate groups.
+Second, the technology job markets in some of these countries may offer fewer employers and less movement between companies. Finding another job after losing the current one could be difficult, which may contribute to higher job insecurity. Workers may consequently prefer to remain in their existing positions despite these concerns.
 
-**Hypotheses.** Table 10 summarises the verdicts.
+Cultural factors could also be relevant. Many of these countries are generally considered more collectivist [2], where loyalty to an organisation and long-term employment relationships may carry greater importance. This is particularly relevant when considering Japan, South Korea and Taiwan. Family and social networks may also help workers manage responsibilities outside the workplace, potentially contributing to the lower levels of reported work-home conflict. The higher self-efficacy scores could also be related to the relatively selective nature and professional status of ICT jobs in some of these countries.
+
+**Cluster 2: Strained but mobile.** The second cluster contains 20 countries. Workers in these countries generally report lower job insecurity and higher work satisfaction. However, they also report more work overload, greater conflict between work and home, and higher levels of exhaustion. Their intentions to leave their current employer or move out of the ICT profession are also higher.
+
+Sixteen of these 20 countries are located in Europe or the Americas. One possible explanation is the structure of their ICT labour markets. Many of these countries have relatively open technology sectors, where workers can move between employers more easily. As a result, losing a job may be less concerning because alternative opportunities are more accessible. This could explain why job insecurity is lower, while intentions to change employers or leave the profession are higher.
+
+The Central and Eastern European countries in this group, including Hungary, Lithuania, Macedonia, Poland and Romania, are also connected to the wider European labour market. Moving abroad for better employment opportunities may be a realistic option for ICT workers in these countries. A similar situation may apply to Mexico, Peru, Brazil and Argentina because of their links with the North American technology market.
+
+India is also part of this cluster. Its large IT outsourcing industry has experienced relatively high employee attrition, which is consistent with the higher turnover and turnaway intentions observed in this group.
+
+Cultural differences may also contribute to these patterns. Countries with more individualistic cultures can have different expectations regarding work, personal responsibilities and work-life balance. These differences may influence how workers experience and report conflicts between work and home.
+
+**Countries at the edges.** Some countries do not fit entirely into the general patterns of either cluster. Canada and France, for example, are both advanced Western economies but are included in Cluster 1. France's employment protection policies and relatively shorter legal working week may help explain its lower work overload and turnover scores. Canada, on the other hand, has a silhouette score of 0.18, which suggests that its position within Cluster 1 is not particularly clear.
+
+Russia is even closer to the boundary between the two groups, with a silhouette score of -0.01. This means that it could reasonably be associated with either cluster, so its classification should be treated with caution.
+
+**The three-cluster results depend on the scoring method.** When factor scores are used, Iran, Japan and South Korea form a separate third group. These countries have particularly high scores for self-efficacy, friendship circles and job insecurity (Figure 4, right). Japan and South Korea share relatively strong company-based social networks, alongside demanding workplace conditions. Iran may show a similar pattern for different reasons, including the economic uncertainty associated with international sanctions and the professional networks within its educated ICT workforce.
+
+The results are different when sum scores are used. In this case, Bangladesh, Malaysia, Nigeria and Pakistan form the third group. These countries are mainly characterised by unusually low scores for work overload, work-home conflict and exhaustion, at approximately 1.7 standard deviations below the average.
+
+This difference is related to how the two scoring methods work. Sum scores combine the raw responses across all items, meaning that particularly high or low answers can have a larger influence on the final score. Factor scores assign different weights to items depending on how well they measure the underlying issue. They also reduce some item-specific variation, which can make extreme scores less influential.
+
+Nigeria's unusually low strain scores appear mainly when using sum scores. It is also important to consider that Nigeria has the smallest sample, with only 93 workers. For this reason, factor scores appear to provide a more reliable basis for interpreting the three-cluster results.
+
+Overall, the three-cluster solutions are less consistent, particularly when countries with extreme scores are removed. We therefore consider these smaller groups as countries that may deserve further attention rather than treating them as clearly established clusters.
+
+**Hypotheses.** Table 10 summarises the findings for the four hypotheses.
 
 | | Result | Finding |
 |:-----|:--------------------------------------------------------------|:----------------|
@@ -189,21 +237,45 @@ Table: Cluster means and one-way ANOVA for the two-cluster solution (KW: Kruskal
 
 Table: Verdicts on the hypotheses
 
-The partial result for H4 is worth a comment. Within a country, satisfied workers are usually less exhausted. Across countries, however, satisfaction rises with strain and exit intentions. This is consistent with mobile markets, where workers choose jobs they like but work hard and leave readily. It may also reflect known differences in how people answer surveys across cultures: respondents in East Asia tend to avoid the top of rating scales, which lowers reported satisfaction in Cluster 1.
+The results for H4 are worth discussing further. At the individual level, workers who are more satisfied with their jobs are generally less exhausted. However, the country-level results show that satisfaction increases alongside work-related strain and intentions to leave.
+
+One possible explanation is that workers in more developed and mobile labour markets have access to jobs that they find satisfying, even if those jobs involve longer working hours and greater pressure. They may also have more opportunities to move to another employer or leave the profession altogether.
+
+Differences in survey response styles could also influence these findings. Previous research suggests that respondents in East Asian countries may be less likely to choose the highest points on rating scales. This could partly explain the lower satisfaction scores observed in Cluster 1.
 
 # Recommendations
 
-**1. Classify countries for ICT labour policy by these two groups, not by income level.** The two clusters are the same whichever score, method or subset of countries is used, and they cut across the IMF's split between advanced and emerging economies. Japan and Ghana share a profile, and so do the USA and Peru. Peer comparisons and policy advice on the ICT workforce should therefore be organised by cluster.
+**1. Use the two country groups when comparing ICT labour markets.** The results suggest that grouping countries according to the characteristics of their ICT workforce could be more useful than relying only on income classifications. The two clusters remain the same across both scoring methods and clustering techniques, and they include countries from different economic categories.
 
-**2. In the strained-but-mobile cluster, address exhaustion and exit from the profession.** These countries combine the highest overload, work-home conflict and exhaustion with the highest turnaway intention, and turnaway separates the clusters more than any other issue. The risk is a loss of ICT skills to other sectors or abroad, especially for the Central and Eastern European and Latin American hubs. Policy should focus on working-time regulation, flexible and remote work, and tracking how many workers leave the sector.
+For example, Japan and Ghana fall into the same group, while the USA and Peru are also grouped together. This shows that countries with different economic backgrounds can still have similar patterns in job security, satisfaction and turnover intentions. Future comparisons and policy discussions could take these similarities into account.
 
-**3. In the insecure-but-committed cluster, address job insecurity.** Workers here stay, but they feel insecure and less satisfied, which can hold back risk-taking and innovation. Unemployment insurance, portable benefits, publicly supported reskilling and policies that bring more tech employers into the country would lower insecurity without making workers leave the profession.
+**2. Focus on exhaustion and employee retention in the strained-but-mobile group.** Countries in Cluster 2 report higher levels of work overload, work-home conflict and exhaustion, along with stronger intentions to leave the ICT profession. Turnaway intention also shows one of the largest differences between the two clusters.
 
-**4. Monitor the two watch lists and the boundary countries.** Iran, Japan and South Korea stand out for high insecurity alongside strong self-efficacy and social networks. Bangladesh, Malaysia, Nigeria and Pakistan report unusually low strain, which may be real or may reflect small samples and response styles. Russia, Poland and Canada sit near the boundary and could change group as their economies change.
+This could become a concern for countries that depend heavily on their ICT workforce, particularly those in Central and Eastern Europe and Latin America. Policies encouraging reasonable working hours, flexible arrangements and remote work could help address some of these issues. It would also be useful to monitor how many ICT workers leave the profession over time, rather than focusing only on employee turnover within individual companies.
 
-**5. Strengthen the data.** Country samples range from 93 to 634 workers, and nine of the original 46 countries are missing. Larger and more even samples, repeated over time, would allow the IMF to see whether countries move between clusters as their ICT sectors mature.
+**3. Give more attention to job insecurity in the insecure-but-committed group.** Workers in Cluster 1 appear less likely to leave their employers or the ICT profession, but they report higher job insecurity and lower work satisfaction. Over time, this could affect their willingness to take risks, develop new ideas or invest in their professional growth.
 
-**Limitations.** The analysis uses country averages, so it describes countries, not individual workers. With 37 countries, clusters of three or four countries rest on very few observations. The ANOVA p-values are inflated because the clusters were built from the same scores. The interpretation relies on general economic knowledge rather than on additional country data, and survey answers may not be fully comparable across cultures.
+Possible policy measures include improving unemployment protection, making benefits more portable between employers, supporting reskilling programmes and encouraging more technology companies to establish operations in these countries. These measures could help provide workers with greater security while improving their opportunities within the ICT sector.
+
+**4. Keep track of the smaller groups and countries near the cluster boundaries.** The three-cluster results identify a few countries with unusual patterns. Iran, Japan and South Korea stand out because of their combination of high job insecurity, self-efficacy and friendship circles. Bangladesh, Malaysia, Nigeria and Pakistan report particularly low levels of work-related strain.
+
+These patterns may reflect genuine differences, but they could also be influenced by sample sizes or cultural differences in survey responses. Russia, Poland and Canada are also worth monitoring because their positions are relatively close to the boundary between the two main clusters.
+
+**5. Improve the data used for future analysis.** The current analysis covers 37 countries, with sample sizes ranging from 93 to 634 workers. Nine of the original 46 countries are not in the file we received.
+
+Future research would benefit from larger and more balanced samples across countries. Repeating the survey over several years would also help show whether countries move between clusters as their ICT industries develop. This would make it easier to understand whether the patterns identified in this analysis remain consistent over time.
+
+**Limitations.** There are several limitations that should be considered when interpreting these findings.
+
+First, the analysis is based on country averages. Therefore, it describes differences between countries rather than differences between individual workers. Workers within the same country may have very different experiences that are not reflected in the average scores.
+
+Second, the analysis includes only 37 countries. The smaller groups in the three-cluster solutions contain just three or four countries, so their results should be interpreted carefully.
+
+Another limitation concerns the statistical tests. Since the same scores were used to create the clusters and then compare them, the ANOVA p-values may overstate the strength of the differences. Although the Kruskal-Wallis tests produced similar results, this issue still needs to be considered.
+
+The explanations provided for the differences between clusters are also based mainly on general knowledge about national economies and labour markets. Additional country-level data would be needed to examine whether factors such as employment protection, labour market mobility and cultural differences actually explain the observed patterns.
+
+Finally, survey responses may not be directly comparable across cultures. People in different countries may interpret questions or use rating scales differently, which could influence the country averages and, in turn, the clustering results.
 
 # References
 
@@ -211,21 +283,21 @@ The partial result for H4 is worth a comment. Within a country, satisfied worker
 \begingroup\small\setlength{\parskip}{0.25em}
 ```
 
-[1] Bakker, A. B. and Demerouti, E. (2007). The job demands-resources model: State of the art. *Journal of Managerial Psychology*, 22(3), 309–328.
+[1] Bakker, A. B. and Demerouti, E. (2007). The job demands-resources model: State of the art. *Journal of Managerial Psychology*, 22(3), 309-328.
 
 [2] Hofstede, G. (2001). *Culture's Consequences* (2nd ed.). Thousand Oaks, CA: Sage.
 
-[3] Ward, J. H. (1963). Hierarchical grouping to optimize an objective function. *Journal of the American Statistical Association*, 58(301), 236–244.
+[3] Ward, J. H. (1963). Hierarchical grouping to optimize an objective function. *Journal of the American Statistical Association*, 58(301), 236-244.
 
-[4] MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. *Proceedings of the 5th Berkeley Symposium on Mathematical Statistics and Probability*, 1, 281–297.
+[4] MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. *Proceedings of the 5th Berkeley Symposium on Mathematical Statistics and Probability*, 1, 281-297.
 
-[5] Rousseeuw, P. J. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. *Journal of Computational and Applied Mathematics*, 20, 53–65.
+[5] Rousseeuw, P. J. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. *Journal of Computational and Applied Mathematics*, 20, 53-65.
 
-[6] Pedregosa, F. et al. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830.
+[6] Pedregosa, F. et al. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825-2830.
 
-[7] McKinney, W. (2010). Data structures for statistical computing in Python. *Proceedings of the 9th Python in Science Conference*, 56–61.
+[7] McKinney, W. (2010). Data structures for statistical computing in Python. *Proceedings of the 9th Python in Science Conference*, 56-61.
 
-[8] Hubert, L. and Arabie, P. (1985). Comparing partitions. *Journal of Classification*, 2(1), 193–218.
+[8] Hubert, L. and Arabie, P. (1985). Comparing partitions. *Journal of Classification*, 2(1), 193-218.
 
 ```{=latex}
 \endgroup
