@@ -1,0 +1,9 @@
+| Check                   | Result                            |
+|:------------------------|:----------------------------------|
+| Countries               | 37                                |
+| Columns                 | 21                                |
+| Missing cells           | 0                                 |
+| Duplicate countries     | 0                                 |
+| Duplicate codes         | 0                                 |
+| Non-numeric score cells | 0                                 |
+| Codes missing from 1-46 | 2, 15, 17, 21, 26, 29, 36, 37, 41 |

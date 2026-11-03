@@ -1,0 +1,55 @@
+Score,Issue,Pair,Mean difference,p (Tukey),Sig.
+FS,Friendship circles,C1 vs C2,-0.7387,0.0001,***
+FS,Friendship circles,C1 vs C3,-0.7262,0.0001,***
+FS,Friendship circles,C2 vs C3,0.0125,0.9878,
+FS,Job insecurity,C1 vs C2,-0.3456,0.0048,***
+FS,Job insecurity,C1 vs C3,-0.6978,0.0,***
+FS,Job insecurity,C2 vs C3,-0.3522,0.0,***
+FS,Self-efficacy,C1 vs C2,-0.7263,0.0002,***
+FS,Self-efficacy,C1 vs C3,-1.0388,0.0,***
+FS,Self-efficacy,C2 vs C3,-0.3125,0.0026,***
+FS,Work satisfaction,C1 vs C2,0.0717,0.8604,
+FS,Work satisfaction,C1 vs C3,0.6006,0.0002,***
+FS,Work satisfaction,C2 vs C3,0.5289,0.0,***
+FS,Work overload,C1 vs C2,-0.042,0.9512,
+FS,Work overload,C1 vs C3,0.2655,0.1379,
+FS,Work overload,C2 vs C3,0.3074,0.0008,***
+FS,Work-home conflict,C1 vs C2,-0.0871,0.7914,
+FS,Work-home conflict,C1 vs C3,0.2943,0.0739,*
+FS,Work-home conflict,C2 vs C3,0.3814,0.0,***
+FS,Work exhaustion,C1 vs C2,0.1158,0.6833,
+FS,Work exhaustion,C1 vs C3,0.4441,0.0064,***
+FS,Work exhaustion,C2 vs C3,0.3283,0.0004,***
+FS,Turnover intention,C1 vs C2,-0.121,0.7148,
+FS,Turnover intention,C1 vs C3,0.1622,0.5324,
+FS,Turnover intention,C2 vs C3,0.2832,0.0055,***
+FS,Turnaway intention,C1 vs C2,0.1911,0.5124,
+FS,Turnaway intention,C1 vs C3,0.778,0.0001,***
+FS,Turnaway intention,C2 vs C3,0.5869,0.0,***
+S,Friendship circles,C1 vs C2,1.8119,0.0022,***
+S,Friendship circles,C1 vs C3,1.067,0.0738,*
+S,Friendship circles,C2 vs C3,-0.7448,0.0515,*
+S,Job insecurity,C1 vs C2,0.5699,0.3117,
+S,Job insecurity,C1 vs C3,-1.0264,0.0229,**
+S,Job insecurity,C2 vs C3,-1.5962,0.0,***
+S,Self-efficacy,C1 vs C2,1.0467,0.0677,*
+S,Self-efficacy,C1 vs C3,-0.3095,0.7573,
+S,Self-efficacy,C2 vs C3,-1.3562,0.0001,***
+S,Work satisfaction,C1 vs C2,1.2587,0.0023,***
+S,Work satisfaction,C1 vs C3,2.4001,0.0,***
+S,Work satisfaction,C2 vs C3,1.1414,0.0,***
+S,Work overload,C1 vs C2,1.4364,0.0047,***
+S,Work overload,C1 vs C3,2.2053,0.0,***
+S,Work overload,C2 vs C3,0.7689,0.0161,**
+S,Work-home conflict,C1 vs C2,1.5346,0.0005,***
+S,Work-home conflict,C1 vs C3,2.4427,0.0,***
+S,Work-home conflict,C2 vs C3,0.9082,0.001,***
+S,Work exhaustion,C1 vs C2,1.0088,0.0643,*
+S,Work exhaustion,C1 vs C3,1.9826,0.0001,***
+S,Work exhaustion,C2 vs C3,0.9738,0.0027,***
+S,Turnover intention,C1 vs C2,0.7855,0.2591,
+S,Turnover intention,C1 vs C3,1.5942,0.0049,***
+S,Turnover intention,C2 vs C3,0.8087,0.0321,**
+S,Turnaway intention,C1 vs C2,0.4053,0.4347,
+S,Turnaway intention,C1 vs C3,1.9429,0.0,***
+S,Turnaway intention,C2 vs C3,1.5376,0.0,***

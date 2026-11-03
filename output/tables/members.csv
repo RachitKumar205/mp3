@@ -1,0 +1,11 @@
+Score,k,Cluster,n,Countries
+FS,2,1,17,"Bangladesh, Canada, China, France, Ghana, Iran, Japan, Jordan, Malaysia, Nigeria, Pakistan, Russia, South Korea, Taiwan, Thailand, Turkey, Vietnam"
+FS,2,2,20,"Argentina, Brazil, Egypt, Finland, Germany, Greece, Hungary, India, Italy, Lithuania, Macedonia, Mexico, New Zealand, Peru, Poland, Portugal, Romania, South Africa, UK, USA"
+FS,3,1,3,"Iran, Japan, South Korea"
+FS,3,2,14,"Bangladesh, Canada, China, France, Ghana, Jordan, Malaysia, Nigeria, Pakistan, Russia, Taiwan, Thailand, Turkey, Vietnam"
+FS,3,3,20,"Argentina, Brazil, Egypt, Finland, Germany, Greece, Hungary, India, Italy, Lithuania, Macedonia, Mexico, New Zealand, Peru, Poland, Portugal, Romania, South Africa, UK, USA"
+S,2,1,17,"Bangladesh, Canada, China, France, Ghana, Iran, Japan, Jordan, Malaysia, Nigeria, Pakistan, Russia, South Korea, Taiwan, Thailand, Turkey, Vietnam"
+S,2,2,20,"Argentina, Brazil, Egypt, Finland, Germany, Greece, Hungary, India, Italy, Lithuania, Macedonia, Mexico, New Zealand, Peru, Poland, Portugal, Romania, South Africa, UK, USA"
+S,3,1,4,"Bangladesh, Malaysia, Nigeria, Pakistan"
+S,3,2,13,"Canada, China, France, Ghana, Iran, Japan, Jordan, Russia, South Korea, Taiwan, Thailand, Turkey, Vietnam"
+S,3,3,20,"Argentina, Brazil, Egypt, Finland, Germany, Greece, Hungary, India, Italy, Lithuania, Macedonia, Mexico, New Zealand, Peru, Poland, Portugal, Romania, South Africa, UK, USA"
