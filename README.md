@@ -6,34 +6,25 @@ group together. The write-up is in [`report/MP3_Report.pdf`](report/MP3_Report.p
 
 ## Running it
 
-You need Python 3.14 and [uv](https://docs.astral.sh/uv/).
+You need Python 3.14, [uv](https://docs.astral.sh/uv/), and pandoc with pdflatex for the PDF.
 
 ```bash
 uv sync
 ```
 
-```bash
-uv run python src/run_all.py
-```
+Then open `mp3.ipynb` in Jupyter or VS Code with the project's environment and run all
+cells from the project folder. The notebook holds all the code: it reads the raw file,
+writes every table to `output/tables/` and every figure to `output/figures/`, and builds
+`report/MP3_Report.pdf` from `report/report.md` at the end.
 
-This rebuilds every table and figure from the raw file. To rebuild the PDF too (needs
-pandoc and pdflatex):
-
-```bash
-uv run python src/build_report.py
-```
-
-## What's where
-
-| Path | What it is |
+| Section of the notebook | What it does |
 |---|---|
-| `src/01_prepare.py` | Data checks, extreme values, standardising the sum scores |
-| `src/02_eda.py` | Descriptive statistics, issue correlations, heatmap, PCA |
-| `src/03_cluster.py` | Elbow and silhouette, Ward and k-means on both scores, adjusted Rand index |
-| `src/04_profile.py` | ANOVA with Shapiro–Wilk and Levene checks, Kruskal–Wallis, Tukey HSD, profiles |
-| `src/config.py` | Paths, issue names and table helpers |
-| `report/report.md` | The report text, built into the PDF |
-| `output/tables/`, `output/figures/` | Everything the scripts produce |
+| Setup | Paths, issue names and table helpers |
+| 1. Data preprocessing | Data checks, extreme values, standardising the sum scores |
+| 2. Data visualization | Descriptive statistics, issue correlations, heatmap, PCA |
+| 3. Clustering | Elbow and silhouette, Ward and k-means on both scores, adjusted Rand index |
+| 4. Do the clusters differ? | ANOVA with Shapiro–Wilk and Levene checks, Kruskal–Wallis, Tukey HSD, profiles |
+| 5. Build the PDF report | Turns `report/report.md` into the PDF |
 
 ## What we found
 
